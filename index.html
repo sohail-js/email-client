@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email</title>
+
+    <link rel="stylesheet" href="https://materialdesignicons.com/cdn/2.0.46/css/materialdesignicons.min.css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <div class="folders" id="folders">
+            <ul class="links">
+                <li id="inbox" class="inbox">
+                    <a onclick="activePage = 'inbox';renderEmails(); setActiveFolder(this)" class="active">
+                        <div>Inbox</div>
+                        <div class="unread-count"></div>
+                    </a>
+                </li>
+                <li>
+                    <a onclick="activePage = 'favourites'; renderEmails(true); setActiveFolder(this)">
+                        <div>Favourites</div>
+                        <div></div>
+                    </a>
+                </li>
+            </ul>
+            <ul class="footer">
+                <hr>
+                <li class="username">
+                    <div class="email">Mailbox: <span id="mailBox">test@maildrop.cc</span></div>
+                    <a href="/"> <i class="mdi mdi-power"></i> Sign-out</a>
+                </li>
+                <hr>
+                <li>
+                    Developed by <a target="_blank" href="https://www.linkedin.com/in/abdul-sohail/">Sohail</a>
+                </li>
+
+                <li class="design">
+                    Design inspired by <a target="_blank"
+                        href="https://dribbble.com/shots/5771691-Email-Client-Ui-Exploration/attachments">Vishnu</a>
+                </li>
+            </ul>
+        </div>
+        <div class="email-list" id="emailList">
+            <div class="resizebar" id="resizeBar"></div>
+            <div class="toolbar">
+                <div class="search">
+                    <i class="mdi mdi-magnify"></i>
+                    <input type="text" class="search" placeholder="Search ..."
+                        title="Smart Search: Match words out of order. For example if you search for 'Allan Fife' it would match an email containing the words Allan and Fife in 'from' or 'subject', regardless of the order or position that they appear."
+                        onkeyup="searchEmails(this.value)">
+                </div>
+                <div class="order-by">
+                    <a class="" title="Sort by date" onclick="sortEmails(this)">
+                        <i class="mdi mdi-sort-descending"></i>
+                    </a>
+                </div>
+            </div>
+            <ul>
+            </ul>
+        </div>
+        <div class="full-email" id="fullEmail">
+
+        </div>
+    </div>
+
+
+    <script src="util.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -14,3 +14,6 @@ https://email-client-js.firebaseapp.com/
 5. Unread emails count
 6. Delete email
 7. Cache viewed emails
+
+### Special thanks
+Special thanks to [Akshay Saini](https://www.linkedin.com/in/akshaymarch7/) for the inspiration to create this app.

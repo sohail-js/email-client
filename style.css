@@ -22,6 +22,7 @@ hr {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding-top: 40px;
 }
 .folders .user {
   color: #fff;
@@ -79,6 +80,10 @@ hr {
 ul {
   list-style-type: none;
   padding: 0;
+}
+
+#mailBox a {
+  display: inline;
 }
 
 /* EMAIL LIST */

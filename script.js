@@ -2,11 +2,14 @@
 // window.location.href = 'https://github.com/'
 var name = location.search.slice(1);
 if (name == "") {
-    name = prompt('Please enter a username', 'test');
+    name = prompt('Please enter a username. After that you can send emails to <USERNAME>@maildrop.cc to view them in this app.', 'test');
     location.href = location.origin + '?' + name
 }
 // Update footer email name
-document.getElementById('mailBox').innerText = name + "@mailbox.cc";
+name += "@maildrop.cc";
+document.getElementById('mailBox').innerHTML = `
+<a title="Send email to ${name} to view it in this app." href="mailto:${name}">${name}</a>
+`;
 
 var filteredEmailData;
 

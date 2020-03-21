@@ -8,7 +8,7 @@ https://email-client-js.firebaseapp.com/
 
 ## Features
 1. Resize email list
-2. Debouncing in search and throttling in sort
+2. Search and sort emails (with debouncing and throttling)
 3. Smart search (search for any case with multiple space separated search terms)
 4. Favourites
 5. Unread emails count

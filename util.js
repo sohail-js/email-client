@@ -63,7 +63,7 @@ const utility = {
         top: 0;
         right: 0;
         /* background-color: red; */
-        cursor: col-resize;`)
+        cursor: w-resize;`)
 
         resizableElement.appendChild(resizeBar)
 

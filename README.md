@@ -16,4 +16,4 @@ https://email-client-js.firebaseapp.com/
 7. Cache viewed emails
 
 ### Special thanks
-Special thanks to [Akshay Saini](https://www.linkedin.com/in/akshaymarch7/) for the inspiration to create this app.
+Special thanks to [Akshay Saini](https://www.youtube.com/channel/UC3N9i_KvKZYP4F84FPIzgPQ) for the inspiration to create this app.

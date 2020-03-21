@@ -104,10 +104,10 @@ const utility = {
 
         }
 
-        let left = resizableElement.getClientRects()[0].x;
+        // let left = resizableElement.getClientRects()[0].x;
         function mouseMove(event) {
             // console.log("Dragging...", event.x - left);
-            width = event.x - left;
+            width = event.x - resizableElement.getClientRects()[0].x;
             resizableElement.style.width = width + "px";
         }
 

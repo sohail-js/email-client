@@ -1,10 +1,12 @@
-
-// window.location.href = 'https://github.com/'
+// Get username from URL
 var name = location.search.slice(1);
+
+// If username not found in the URL ask using prompt
 if (name == "") {
     name = prompt('Please enter a username. After that you can send emails to <USERNAME>@maildrop.cc to view them in this app.', 'test');
     location.href = location.origin + '?' + name
 }
+
 // Update footer email name
 name += "@maildrop.cc";
 document.getElementById('mailBox').innerHTML = `
@@ -12,17 +14,22 @@ document.getElementById('mailBox').innerHTML = `
 `;
 
 var filteredEmailData;
-
 var activeEmail = {};
 const emailList = document.querySelector('#emailList ul');
 
+// Get list of read emails fro localStorage
 var readEmails = localStorage.getItem('readEmails');
 readEmails = readEmails ? JSON.parse(readEmails) : [];
 
 var activePage = 'inbox';
+
+/**
+ * @desc render filtered email list in the webpage.
+ */
 function renderEmails() {
 
     var emailDataTemp = filteredEmailData;
+
     if (activePage == 'favourites') {
         emailDataTemp = emailDataTemp.filter(x => x.isFavorite)
     }
@@ -64,12 +71,17 @@ function renderEmails() {
         
         `;
     }
-
-    // localStorage.setItem('emailData', JSON.stringify(emailData));
 }
 
+/**
+ * @desc Delete email with given ID
+ * @param {String} id 
+ */
 function deleteEmail(id) {
+    // Microinteraction: Adding loader icon in delete button
     document.getElementById('deleteIcon').className = "mdi mdi-spin mdi-loading";
+
+    // API call to delete email from server
     utility.http({ url: `https://api.maildrop.cc/v2/mailbox/${name}/${id}`, method: 'DELETE' }).then(() => {
         filteredEmailData = filteredEmailData.filter(x => x.id != id);
         if (activeEmail.id == id) {
@@ -79,12 +91,15 @@ function deleteEmail(id) {
     })
 }
 
+/**
+ * @desc Get complete email data from API and render it in webpage.
+ * @param {String} id 
+ */
 var emailCache = [];
 const activeEmailDiv = document.getElementById('fullEmail');
 async function setActiveEmail(id) {
     let output = "";
     if (id) {
-
         let cache = emailCache.find(x => x.id == id);
         if (!cache) {
             activeEmailDiv.innerHTML = 'Loading ...';
@@ -133,10 +148,10 @@ async function setActiveEmail(id) {
         }
     }
 
-
     activeEmailDiv.innerHTML = output;
     activeEmail.isRead = true;
 
+    // Adding HTML of email in iframe to prevent styles conflict between our app and html of email body.
     var doc = document.getElementById('bodyIframe').contentWindow.document;
     doc.open();
     doc.write(activeEmail.html);
@@ -146,31 +161,47 @@ async function setActiveEmail(id) {
     updateUnreadCount();
 }
 
+/**
+ * @desc Toggle favourite against an email to add/remove email from favourites list
+ * @param {*} e 
+ * @param {String} id 
+ */
 function toggleFavourite(e, id) {
+    // To prevent event bubbling
     e.stopPropagation();
+
     const email = filteredEmailData.find(x => x.id == id);
     email.isFavorite = !email.isFavorite;
-
     renderEmails();
 }
 
+/**
+ * @desc Update unread count beside Inbox button
+ */
 const unreadCount = document.querySelector('#inbox .unread-count');
 function updateUnreadCount() {
     const readEmailsHashmap = utility.arrayToHashmap(readEmails);
     unreadCount.innerHTML = filteredEmailData.length - filteredEmailData.filter(x => readEmailsHashmap[x.id]).length;
 }
 
+/**
+ * @desc Filter emails based on search term.
+ * Implemented debouncing here.
+ */
 var emailData;
 var searchEmails = utility.debounce((searchTerm) => {
     console.log("Searching ...");
 
     if (searchTerm) {
         let tempData = emailData.slice(0);
+
+        // Iterating through all space separated terms in the search term.
         searchTerm.trim().toLowerCase().split(" ").forEach(term => {
             tempData = tempData.filter(x => x.subject.toLowerCase().includes(term) || x.from.toLowerCase().includes(term))
         })
         filteredEmailData = tempData;
     }
+    // If search term is empty, render all emails
     else {
         filteredEmailData = emailData.slice(0);
     }
@@ -178,11 +209,19 @@ var searchEmails = utility.debounce((searchTerm) => {
     renderEmails();
 }, 300)
 
+/**
+ * @desc get email data from API 
+ * If id is present, get complete details of email with given id
+ * Else get all emails
+ * @param {String} id optional
+ */
 function getEmailFromApi(id = "") {
     return utility.http({ url: `https://api.maildrop.cc/v2/mailbox/${name}/${id}`, method: 'GET' })
-
 }
 
+/**
+ * @desc set active folder (Inbox, Favourites)
+ */
 const foldersListElement = document.querySelector('#folders > ul').children;
 function setActiveFolder(ele) {
     // Remove active class from all items in the
@@ -197,6 +236,10 @@ function setActiveFolder(ele) {
         ele.className = 'active';
 }
 
+/**
+ * @desc sort emails based on date
+ * Implemented throttle here.
+ */
 var sortEmails = utility.throttle(function (ele) {
     console.log("Sorting");
 
@@ -212,9 +255,11 @@ var sortEmails = utility.throttle(function (ele) {
     }
     renderEmails();
 }, 500)
-// emailData = JSON.parse(localStorage.getItem('emailData') || '[]');
 
+// Add loading message till data arrives
 emailList.innerHTML = `<div class="loading">Loading ...</div>`;
+
+// Get all emails from API and render it in web page
 getEmailFromApi()
     .then(res => {
         console.log(res);
@@ -225,57 +270,9 @@ getEmailFromApi()
     })
 
 
-
 /**
- * RESIZABLE EMAIL LIST !!!
+ * RESIZABLE COLUMNS
  */
 
-const emailListWrapper = document.getElementById('emailList');
-
-// Set width if available in localstorage
-let width = localStorage.getItem('emailListWidth');
-if (width) {
-    emailListWrapper.style.width = width + "px"
-}
-
-function mouseDown() {
-    // console.log("Mouse down!!!");
-
-    // Listen for mouseup
-    document.addEventListener('mouseup', mouseUp)
-
-    // Listen for mousemove
-    document.addEventListener('mousemove', mouseMove)
-
-    // Disable text selection
-    document.addEventListener('selectstart', disableSelect);
-
-}
-document.getElementById('resizeBar').addEventListener('mousedown', mouseDown)
-
-function mouseUp() {
-    // console.log("Mouse up");
-
-    // Stop listening to mouseup and mousemove
-    document.removeEventListener('mouseup', mouseUp)
-    document.removeEventListener('mousemove', mouseMove)
-
-    // Re-enable text selection
-    document.removeEventListener('selectstart', disableSelect);
-
-    // Store final width in localStorage
-    localStorage.setItem('emailListWidth', width);
-    console.log("Saving width ...", width);
-
-}
-
-let left = emailListWrapper.getClientRects()[0].x;
-function mouseMove(event) {
-    // console.log("Dragging...", event.x - left);
-    width = event.x - left;
-    emailListWrapper.style.width = width + "px";
-}
-
-function disableSelect(e) {
-    e.preventDefault();
-}
+utility.makeResizable({ id: 'folders', minWidth: '15%', maxWidth: '400px'})
+utility.makeResizable({ id: 'emailList', minWidth: '30%', maxWidth: '550px'})

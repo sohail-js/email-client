@@ -8,9 +8,9 @@ if (name == "") {
 }
 
 // Update footer email name
-name += "@maildrop.cc";
+let username = name + "@maildrop.cc";
 document.getElementById('mailBox').innerHTML = `
-<a title="Send email to ${name} to view it in this app." href="mailto:${name}">${name}</a>
+<a title="Send email to ${username} to view it in this app." href="mailto:${username}">${username}</a>
 `;
 
 var filteredEmailData;
@@ -274,5 +274,5 @@ getEmailFromApi()
  * RESIZABLE COLUMNS
  */
 
-utility.makeResizable({ id: 'folders', minWidth: '15%', maxWidth: '400px'})
-utility.makeResizable({ id: 'emailList', minWidth: '30%', maxWidth: '550px'})
+utility.makeResizable({ id: 'folders', minWidth: '15%', maxWidth: '400px' })
+utility.makeResizable({ id: 'emailList', minWidth: '30%', maxWidth: '550px' })

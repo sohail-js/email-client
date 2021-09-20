@@ -54,7 +54,7 @@ function renderEmails() {
                 <div class="icons">
                     <span ${unread ? 'class="unread" title="unread"' : ''}></span>
                     <a onclick="toggleFavorite(event, '${email.id}')">
-                        <i class="mdi ${email.isFavorite ? 'mdi-star' : 'mdi-star-outline'}" title="Toggle favourite"></i>    
+                        <i class="mdi ${email.isFavorite ? 'mdi-star' : 'mdi-star-outline'}" title="Toggle favorite"></i>    
                     </a>
                 </div>
             </div>
@@ -162,7 +162,7 @@ async function setActiveEmail(id) {
 }
 
 /**
- * @desc Toggle favourite against an email to add/remove email from favorites list
+ * @desc Toggle favorite against an email to add/remove email from favorites list
  * @param {*} e 
  * @param {String} id 
  */
@@ -220,7 +220,7 @@ function getEmailFromApi(id = "") {
 }
 
 /**
- * @desc set active folder (Inbox, favorites)
+ * @desc set active folder (Inbox, Favorites)
  */
 const foldersListElement = document.querySelector('#folders > ul').children;
 function setActiveFolder(ele) {

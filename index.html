@@ -18,14 +18,14 @@
         <div class="folders" id="folders">
             <ul class="links">
                 <li id="inbox" class="inbox">
-                    <a onclick="activePage = 'inbox';renderEmails(); setActiveFolder(this)" class="active">
+                    <a onclick="activePage = 'inbox'; renderEmails(); setActiveFolder(this)" class="active">
                         <div>Inbox</div>
                         <div class="unread-count"></div>
                     </a>
                 </li>
                 <li>
-                    <a onclick="activePage = 'favourites'; renderEmails(true); setActiveFolder(this)">
-                        <div>Favourites</div>
+                    <a onclick="activePage = 'favorites'; renderEmails(true); setActiveFolder(this)">
+                        <div>Favorites</div>
                         <div></div>
                     </a>
                 </li>
@@ -39,17 +39,11 @@
                 </li>
                 <hr>
                 <li>
-                    <div>
-                        Integrated with <a target="_blank" href="https://maildrop.cc">MailDrop</a>
-                    </div>
-                </li>
-                <li>
-                    Developed by <a target="_blank" href="https://www.linkedin.com/in/abdul-sohail/">Sohail</a>
+                    Developed by <a target="_blank" href="https://github.com/Zachary-Rude/">Zachary</a>
                 </li>
 
                 <li class="design">
-                    Design inspired by <a target="_blank"
-                        href="https://dribbble.com/shots/5771691-Email-Client-Ui-Exploration/attachments">Vishnu</a>
+                    Design inspired by <a target="_blank" href="https://dribbble.com/shots/5771691-Email-Client-Ui-Exploration/attachments">Vishnu</a>
                 </li>
             </ul>
         </div>
@@ -57,7 +51,7 @@
             <div class="toolbar">
                 <div class="search">
                     <i class="mdi mdi-magnify"></i>
-                    <input type="text" class="search" placeholder="Search ..."
+                    <input type="search" class="search" placeholder="Search ..."
                         title="Smart Search: Match words out of order. For example if you search for 'Allan Fife' it would match an email containing the words Allan and Fife in 'from' or 'subject', regardless of the order or position that they appear."
                         onkeyup="searchEmails(this.value)">
                 </div>

@@ -30,7 +30,7 @@ function renderEmails() {
 
     var emailDataTemp = filteredEmailData;
 
-    if (activePage == 'favourites') {
+    if (activePage == 'favorites') {
         emailDataTemp = emailDataTemp.filter(x => x.isFavorite)
     }
 
@@ -53,7 +53,7 @@ function renderEmails() {
                 <div class="subject" title="${email.subject}">${email.subject.substr(0, 30)} ${email.subject.length > 30 ? '...' : ''}</div>
                 <div class="icons">
                     <span ${unread ? 'class="unread" title="unread"' : ''}></span>
-                    <a onclick="toggleFavourite(event, '${email.id}')">
+                    <a onclick="toggleFavorite(event, '${email.id}')">
                         <i class="mdi ${email.isFavorite ? 'mdi-star' : 'mdi-star-outline'}" title="Toggle favourite"></i>    
                     </a>
                 </div>
@@ -162,11 +162,11 @@ async function setActiveEmail(id) {
 }
 
 /**
- * @desc Toggle favourite against an email to add/remove email from favourites list
+ * @desc Toggle favourite against an email to add/remove email from favorites list
  * @param {*} e 
  * @param {String} id 
  */
-function toggleFavourite(e, id) {
+function toggleFavorite(e, id) {
     // To prevent event bubbling
     e.stopPropagation();
 
@@ -220,7 +220,7 @@ function getEmailFromApi(id = "") {
 }
 
 /**
- * @desc set active folder (Inbox, Favourites)
+ * @desc set active folder (Inbox, favorites)
  */
 const foldersListElement = document.querySelector('#folders > ul').children;
 function setActiveFolder(ele) {
